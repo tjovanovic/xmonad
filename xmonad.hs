@@ -30,7 +30,7 @@ import XMonad.Util.NamedScratchpad
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-
+import Data.String.Utils
 
 
 ------------------------------------------------------------------------
@@ -144,7 +144,7 @@ myLayout = avoidStruts (
 -- Currently based on the ir_black theme.
 --
 myNormalBorderColor  = "#181818"
-myFocusedBorderColor = "#333333"
+myFocusedBorderColor = "#C0C0C0"
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 myTabConfig = defaultTheme {
@@ -466,7 +466,7 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
   xmonad $ defaults {
       logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
+            ppOutput = hPutStrLn xmproc . replace " NSP " " "
           , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppSep = "   "
