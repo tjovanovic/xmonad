@@ -454,8 +454,9 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   spawn "killall nautilus"
   spawn "rm ~/.config/google-chrome/SingletonLock"
-  spawn "setxkbmap -option caps:escape"
-  setWMName "LG3D"
+  spawn "setxkbmap us -option caps:escape"
+  spawn "~/.dropbox-dist/dropboxd"
+--  setWMName "LG3D"
 
 
 ------------------------------------------------------------------------
