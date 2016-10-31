@@ -16,7 +16,7 @@ end_colour = "</fc>"
 
 finger_re = re.compile("(Name: )([a-zA-Z ]+)")
 
-print(normal_colour + " (" + str(len(users)) + ")" + end_colour, end="")
+#print(normal_colour + " (" + str(len(users)) + ")" + end_colour, end="")
 for user in users:
     if user[0] == selfname:
         #print(normal_colour + " " + user[-1:][0] + end_colour + "    ", end="")
