@@ -174,7 +174,7 @@ myBorderWidth = 1
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "super key" is usually mod4Mask.
 --
-myModMask = mod4Mask
+myModMask = mod5Mask
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
@@ -454,7 +454,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   spawn "killall nautilus"
   spawn "rm ~/.config/google-chrome/SingletonLock"
-  spawn "setxkbmap us -option caps:escape"
+  spawn "setxkbmap us -variant altgr-intl -option caps:escape"
   spawn "~/.dropbox-dist/dropboxd"
 --  setWMName "LG3D"
 
