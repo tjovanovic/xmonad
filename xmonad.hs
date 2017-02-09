@@ -187,7 +187,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Start EMACS
   , ((modMask, xK_e),
-     spawn "emacs")
+     spawn "emacsclient -c")
 
   -- Start Blender
   , ((modMask, xK_b),
@@ -198,8 +198,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "gimp")
     
   -- Start Chrome Browser
-  , ((modMask, xK_i),
-     spawn "google-chrome")
+  , ((modMask, xK_w),
+     spawn "firefox")
     
   -- Start Vivaldi Browser
   , ((modMask, xK_v),
@@ -216,7 +216,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Launch dmenu.
   -- Use this to launch programs without a key binding.
-  , ((modMask, xK_p),
+  , ((modMask, xK_s),
      spawn "dmenu_run")
 
   -- Take a screenshot in select mode.
@@ -243,19 +243,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Audio mute toggle
   , ((0, xK_F8 ),
-     spawn "amixer -D pulse sset Master toggle")
+     spawn "amixer -q set Master toggle")
 
   -- Audio Vol+
   , ((modMask, xK_bracketright ),
-     spawn "amixer -D pulse sset Master 5%+")
+     spawn "amixer -q set Master 5%+")
     
   -- Audio Vol-
   , ((modMask, xK_bracketleft ),
-     spawn "amixer -D pulse sset Master 5%-")
+     spawn "amixer -q set Master 5%-")
 
   -- Audio mute toggle (media key)
   , ((0, 0x1008FF12),
-     spawn "amixer -D pulse sset Master toggle")
+     spawn "amixer -q set Master toggle")
 
   -- Audio Vol+ (media key)
   , ((0, 0x1008FF13),
@@ -394,7 +394,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-      , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
   -- ++
 
   -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -449,14 +449,14 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 myStartupHook :: X ()
 myStartupHook = do
-  spawn "xscreensaver &"
+  spawn "xscreensaver -no-splash &"
   spawn "feh --bg-scale $HOME/.wall.jpg&"
   spawn "xsetroot -cursor_name left_ptr"
-  spawn "killall nautilus"
-  spawn "rm ~/.config/google-chrome/SingletonLock"
+--  spawn "killall nautilus"
+--  spawn "rm ~/.config/google-chrome/SingletonLock"
   spawn "setxkbmap us -variant altgr-intl -option caps:escape"
-  spawn "~/.dropbox-dist/dropboxd"
---  setWMName "LG3D"
+--  spawn "~/.dropbox-dist/dropboxd"
+  setWMName "LG3D"
 
 
 ------------------------------------------------------------------------

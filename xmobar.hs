@@ -12,7 +12,7 @@ Config {
                     "-h","#FF8500","-l","#8CC4FF","-n","#8CC4FF"] 15,
         Run Cpu ["-t","CPU:<total>%","-H","60","-L","20","-h","#FF8500",
                  "-l","#8CC4FF","-n","#CCCC00"] 15,
-        Run Network "wlp8s0" ["-t","Net:<rx>rx,<tx>tx","-H","500","-L","20",
+        Run Network "wlp3s0" ["-t","Net:<rx>rx,<tx>tx","-H","500","-L","20",
                               "-h","#FF8500","-l","#8CC4FF","-n","#CCCC00"] 10,
         Run Date "%a  %Y-%m-%_d  %b %H:%M" "date" 10,
         Run Com "/bin/sh" ["-c","~/.xmonad/battscript.sh"] "battery" 20,
@@ -23,6 +23,6 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "    %StdinReader% }  %date% %users%  {  %memory%    %cpu%    %vol%    ",
+    template = "    %StdinReader% }  %date%  {  %memory%    %cpu%    %wlp3s0%    %radio%    %battery%    %vol%    ",
     position = TopW C 100
 }
