@@ -27,6 +27,7 @@ import XMonad.Prompt.RunOrRaise
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.NamedScratchpad
+import qualified XMonad.Layout.IndependentScreens as LIS
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -387,6 +388,18 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_q),
      restart "xmonad" True)
 
+
+  , ((0, xK_F9),
+     spawn "xrandr --output eDP1 --primary --auto")
+
+  , ((0, xK_F10),
+     spawn "xrandr --output HDMI1 --primary --auto --right-of eDP1")
+
+  , ((0, xK_F11),
+     spawn "killall stalonetray nm-applet pasystray")
+
+  , ((0, xK_F12),
+     spawn "stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3295 -bg \"#1E1E1E\"& nm-applet& pasystray&")
   ]
   ++
 
@@ -456,7 +469,7 @@ myStartupHook = do
 --  spawn "rm ~/.config/google-chrome/SingletonLock"
   spawn "setxkbmap us -variant altgr-intl -option caps:escape"
 --  spawn "~/.dropbox-dist/dropboxd"
-  setWMName "LG3D"
+--  setWMName "LG3D"
 
 
 ------------------------------------------------------------------------
@@ -499,8 +512,8 @@ defaults = defaultConfig {
     keys               = myKeys,
     mouseBindings      = myMouseBindings,
 
-    -- hooks, layouts
-    layoutHook         = smartBorders $ myLayout,
-    manageHook         = myManageHook,
-    startupHook        = myStartupHook
+-- hooks, layouts
+layoutHook         = smartBorders $ myLayout,
+manageHook         = myManageHook,
+startupHook        = myStartupHook
 }
