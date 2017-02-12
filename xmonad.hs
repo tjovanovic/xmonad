@@ -394,12 +394,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((0, xK_F10),
      spawn "xrandr --output HDMI1 --primary --auto --right-of eDP1")
-
-  , ((0, xK_F11),
-     spawn "killall stalonetray nm-applet pasystray")
-
-  , ((0, xK_F12),
-     spawn "stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3295 -bg \"#1E1E1E\"& nm-applet& pasystray&")
   ]
   ++
 
@@ -468,6 +462,7 @@ myStartupHook = do
 --  spawn "killall nautilus"
 --  spawn "rm ~/.config/google-chrome/SingletonLock"
   spawn "setxkbmap us -variant altgr-intl -option caps:escape"
+  spawn "killall stalonetray nm-applet pasystray; stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3250 -bg \"#1E1E1E\"& nm-applet& pasystray&")
 --  spawn "~/.dropbox-dist/dropboxd"
 --  setWMName "LG3D"
 
