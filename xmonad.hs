@@ -43,6 +43,7 @@ myTerminal = "gnome-terminal --hide-menubar"
 
 scratchpads = [
     NS "term" "gnome-terminal --hide-menubar --role=scratchpad" (role =? "scratchpad") (customFloating $ W.RationalRect (1/12) (1/12) (5/6) (5/6)),
+    NS "afs" "gnome-terminal -e 'bash' --hide-menubar --role=afs" (role =? "afs") (customFloating $ W.RationalRect (1/12) (1/12) (5/6) (5/6)),
     NS "irc" "gnome-terminal --role=irc" (role =? "irc") (customFloating $ W.RationalRect (1/12) (1/12) (5/6) (5/6)),
     NS "applaunch" "xfce4-appfinder -c" (title =? "Application Finder") defaultFloating ,
     NS "notes" "gvim --role notes ~/Dropbox/notes/notes.otl" (role =? "notes") (customFloating $ W.RationalRect (0) (1/20) (2/4) (9/10))]
@@ -200,12 +201,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     
   -- Start Chrome Browser
   , ((modMask, xK_w),
-     spawn "firefox")
+     spawn "firefox-nightly")
     
   -- Start Vivaldi Browser
   , ((modMask, xK_v),
      spawn "vivaldi")
     
+  , ((modMask, xK_c),
+     spawn "networkmanager_dmenu")
+
   -- Lock the screen using xscreensaver.
   , ((modMask .|. controlMask, xK_l),
   --   spawn "gnome-screensaver-command -l")
@@ -215,10 +219,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((0, xK_F1), namedScratchpadAction scratchpads "term")
 
+  , ((modMask, xK_F1), namedScratchpadAction scratchpads "afs")
+
   -- Launch dmenu.
   -- Use this to launch programs without a key binding.
   , ((modMask, xK_s),
-     spawn "dmenu_run")
+     spawn "rofi -modi 'run,ssh' -show run")
 
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
@@ -323,6 +329,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   --  Reset the layouts on the current workspace to default.
   , ((modMask .|. shiftMask, xK_space),
+     setLayout $ XMonad.layoutHook conf)
+
+  , ((0, xK_F2),
      setLayout $ XMonad.layoutHook conf)
 
   -- Resize viewed windows to the correct size.
@@ -462,7 +471,9 @@ myStartupHook = do
 --  spawn "killall nautilus"
 --  spawn "rm ~/.config/google-chrome/SingletonLock"
   spawn "setxkbmap us -variant altgr-intl -option caps:escape"
-  spawn "killall stalonetray nm-applet pasystray; stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3250 -bg \"#1E1E1E\"& nm-applet& pasystray&")
+  spawn "xss-lock -- xscreensaver-command -lock &"
+
+  {-spawn "killall stalonetray nm-applet pasystray; stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3250 -bg \"#1E1E1E\"& nm-applet& pasystray&"-}
 --  spawn "~/.dropbox-dist/dropboxd"
 --  setWMName "LG3D"
 
@@ -472,7 +483,7 @@ myStartupHook = do
 --
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ defaults {
+  xmonad $ docks $ defaults {
       logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmproc . replace " NSP " " "
           , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
