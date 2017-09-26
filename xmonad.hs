@@ -201,7 +201,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     
   -- Start Chrome Browser
   , ((modMask, xK_w),
-     spawn "firefox-nightly")
+     spawn "firefox")
     
   -- Start Vivaldi Browser
   , ((modMask, xK_v),
@@ -396,13 +396,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Restart xmonad.
   , ((modMask, xK_q),
      restart "xmonad" True)
-
-
-  , ((0, xK_F9),
-     spawn "xrandr --output eDP1 --primary --auto")
-
-  , ((0, xK_F10),
-     spawn "xrandr --output HDMI1 --primary --auto --right-of eDP1")
   ]
   ++
 
@@ -472,10 +465,12 @@ myStartupHook = do
 --  spawn "rm ~/.config/google-chrome/SingletonLock"
   spawn "setxkbmap us -variant altgr-intl -option caps:escape"
   spawn "xss-lock -- xscreensaver-command -lock &"
+  spawn "$HOME/.startup_scripts/port_forward_grimes.sh"
+  spawn "$HOME/.startup_scripts/port_forward_arbtracker.sh"
 
   {-spawn "killall stalonetray nm-applet pasystray; stalonetray --icon-size=16 --kludges=force_icons_size --geometry 2x1+3250 -bg \"#1E1E1E\"& nm-applet& pasystray&"-}
 --  spawn "~/.dropbox-dist/dropboxd"
---  setWMName "LG3D"
+  setWMName "LG3D"
 
 
 ------------------------------------------------------------------------
@@ -483,7 +478,7 @@ myStartupHook = do
 --
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ docks $ defaults {
+  xmonad $ defaults {
       logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmproc . replace " NSP " " "
           , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
