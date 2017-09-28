@@ -189,7 +189,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Start EMACS
   , ((modMask, xK_e),
-     spawn "emacsclient -c")
+     spawn "emacsclient -c -s /tmp/emacs1000/server")
 
   -- Start Blender
   , ((modMask, xK_b),
@@ -463,7 +463,9 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
 --  spawn "killall nautilus"
 --  spawn "rm ~/.config/google-chrome/SingletonLock"
-  spawn "setxkbmap us -variant altgr-intl -option caps:escape"
+  spawn "setxkbmap us -variant altgr-intl -option ctrl:nocaps"
+  spawn "(killall xcape; exit 0)"
+  spawn "xcape -e 'Control_L=Escape' -t 500"
   spawn "xss-lock -- xscreensaver-command -lock &"
   spawn "$HOME/.startup_scripts/port_forward_grimes.sh"
   spawn "$HOME/.startup_scripts/port_forward_arbtracker.sh"
