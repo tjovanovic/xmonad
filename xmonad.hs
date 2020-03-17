@@ -201,7 +201,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     
   -- Start Chrome Browser
   , ((modMask, xK_w),
-     spawn "firefox")
+     spawn "google-chrome-stable")
     
   -- Start Vivaldi Browser
   , ((modMask, xK_v),
